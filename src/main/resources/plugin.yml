@@ -1,0 +1,4 @@
+name: DeathSwap
+version: '${version}'
+main: me.ultradev.deathswap.Main
+api-version: 1.18
