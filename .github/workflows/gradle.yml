@@ -24,6 +24,7 @@ jobs:
     - name: Build with Gradle
       run: gradle build
       continue-on-error: true
-    - name: Create artifcat
-      uses: actions/upload-artifact@v2
-      path: build/libs/$REPO_NAME-1.0.jar
+    - uses: actions/upload-artifact@v2
+      with:
+        name: Create artifcat
+        path: build/libs/$REPO_NAME-1.0.jar
