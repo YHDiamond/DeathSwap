@@ -25,4 +25,4 @@ jobs:
       run: gradle build
       continue-on-error: true
     - name: Publish to GitHub Packages Apache Maven
-      run: "gh release create $REPO_NAME ./build/libs/$REPO_NAME-1.0.jar"
+      run: "gh release create $REPO_NAME ./README.md"
