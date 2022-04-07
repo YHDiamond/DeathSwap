@@ -1,34 +1,28 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-# This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-gradle
+name: Maven Package
 
-name: Java CI with Gradle
-
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
-permissions:
-  contents: read
+on: [push]
 
 jobs:
   build:
-
+    if: github.run_number != 1
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: read
+      packages: write
+    env:
+      REPO_NAME: ${{ github.event.repository.name }} 
+      GITHUB_TOKEN: "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"
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up JDK 11
-      uses: actions/setup-java@v3
+    - uses: actions/checkout@v2
+    - name: Set up JDK 17
+      uses: actions/setup-java@v2
       with:
-        java-version: '11'
-        distribution: 'temurin'
+        java-version: '17'
+        distribution: 'adopt'
+        server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
+        settings-path: ${{ github.workspace }} # location for the settings.xml file
     - name: Build with Gradle
-      uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
-      with:
-        arguments: build
+      run: gradlew build
+      continue-on-error: true
+    - name: Publish to GitHub Packages Apache Maven
+      run: "gh release create $REPO_NAME ./Plugin/target/$REPO_NAME-1.0.jar"
