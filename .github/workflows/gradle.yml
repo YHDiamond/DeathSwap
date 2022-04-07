@@ -24,5 +24,7 @@ jobs:
     - name: Build with Gradle
       run: gradle build
       continue-on-error: true
+    - name: Login
+      run: gh auth login
     - name: Publish to GitHub Packages Apache Maven
       run: "gh release create $REPO_NAME ./README.md"
