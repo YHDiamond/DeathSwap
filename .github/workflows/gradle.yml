@@ -1,4 +1,4 @@
-name: Maven Package
+name: Gradle Build
 
 on: [push]
 
@@ -25,4 +25,4 @@ jobs:
       run: gradlew build
       continue-on-error: true
     - name: Publish to GitHub Packages Apache Maven
-      run: "gh release create $REPO_NAME ./Plugin/target/$REPO_NAME-1.0.jar"
+      run: "gh release create $REPO_NAME ./target/$REPO_NAME-1.0.jar"
